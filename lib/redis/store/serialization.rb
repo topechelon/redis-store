@@ -41,7 +41,9 @@ class Redis
         end
 
         def _unmarshal(val, options)
-          unmarshal?(val, options) ? @serializer.load(val) : val
+          return val unless unmarshal?(val, options)
+
+          @serializer.load(val) rescue val
         end
 
         def marshal?(options)
